@@ -16,7 +16,7 @@ describe('POST /todo', () => {
 
 		request(app)
 			.post('/todos')
-			.set('x-auth'. users[0].tokens[0].token)
+			.set('x-auth', users[0].tokens[0].token)
 			.send({text})
 			.expect(200)
 			.expect((res) => {
@@ -121,7 +121,7 @@ describe('DELETE /todos/:id', () => {
 					return done(err);
 				}
 
-				Todo.findById(hexId).then(todo => {
+				Todo.findById(hexId).then((todo) => {
 					expect(todo).toNotExist();
 					done();
 				}).catch((e) => done(e));
@@ -140,7 +140,7 @@ describe('DELETE /todos/:id', () => {
 					return done(err);
 				}
 
-				Todo.findById(hexId).then(todo => {
+				Todo.findById(hexId).then((todo) => {
 					expect(todo).toExist();
 					done();
 				}).catch((e) => done(e));
@@ -293,7 +293,7 @@ describe('POST /users/login', () => {
 			})
 			.end((err, res) => {
 				if (err) {
-					retune done(err);
+					return done(err);
 				}
 
 				User.findById(users[1]._id).then((user) => {
@@ -336,12 +336,12 @@ describe('DELETE /users/me/token', () => {
 			.end((err, res) => {
 				if (err) {
 					return done(err);
-
-					User.find(users[0]._id).then((user) => {
-						expect(user.tokens.length).toBe(0);
-						done();
-					}).catch((e) => done(e));
 				}
+
+				User.findById(users[0]._id).then((user) => {
+					expect(user.tokens.length).toBe(0);
+					done();
+				}).catch((e) => done(e));
 			});
 	});
 });
